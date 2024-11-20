@@ -10,7 +10,7 @@ public class Deque<T> implements Iterable<T> {
 
     // is the deque empty?
     public boolean isEmpty() {
-        return false;
+        return true;
     }
 
     // return the number of items on the deque
