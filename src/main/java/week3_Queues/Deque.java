@@ -150,71 +150,87 @@ public class Deque<T> implements Iterable<T> {
 
     // unit testing (required)
     public static void main(String[] args) {
-        StdOut.println("Creating an empty deque...");
+        StdOut.println("===== Deque Unit Tests =====");
+
+        // 1. Initialization Test
+        StdOut.println("\nTest 1: Initialization");
         Deque<Integer> deque = new Deque<>();
+        StdOut.println("Expected: true, Actual: " + deque.isEmpty() + " (isEmpty)");
+        StdOut.println("Expected: 0, Actual: " + deque.size() + " (size)");
 
-        StdOut.println("\nChecking if the deque is empty:");
-        StdOut.println("Expected: true, Actual: " + deque.isEmpty());
-
-        StdOut.println("\nAdding elements to the front of the deque...");
+        // 2. Adding to Front and Removing from Front
+        StdOut.println("\nTest 2: Add to Front and Remove from Front");
         deque.addFirst(1);
         deque.addFirst(2);
         deque.addFirst(3);
         StdOut.println("Added 3, 2, 1 to the front. Size: " + deque.size());
+        StdOut.println("Removed (Expected: 3): " + deque.removeFirst());
+        StdOut.println("Removed (Expected: 2): " + deque.removeFirst());
+        StdOut.println("Removed (Expected: 1): " + deque.removeFirst());
+        StdOut.println("Expected: true, Actual: " + deque.isEmpty() + " (isEmpty)");
 
-        StdOut.println("\nRemoving elements from the front of the deque...");
-        StdOut.println("Removed: " + deque.removeFirst());
-        StdOut.println("Removed: " + deque.removeFirst());
-        StdOut.println("Removed: " + deque.removeFirst());
-        StdOut.println("Deque empty? " + deque.isEmpty());
-
-        StdOut.println("\nAdding elements to the back of the deque...");
+        // 3. Adding to Back and Removing from Back
+        StdOut.println("\nTest 3: Add to Back and Remove from Back");
         deque.addLast(1);
         deque.addLast(2);
         deque.addLast(3);
         StdOut.println("Added 1, 2, 3 to the back. Size: " + deque.size());
+        StdOut.println("Removed (Expected: 3): " + deque.removeLast());
+        StdOut.println("Removed (Expected: 2): " + deque.removeLast());
+        StdOut.println("Removed (Expected: 1): " + deque.removeLast());
+        StdOut.println("Expected: true, Actual: " + deque.isEmpty() + " (isEmpty)");
 
-        StdOut.println("\nRemoving elements from the back of the deque...");
-        StdOut.println("Removed: " + deque.removeLast());
-        StdOut.println("Removed: " + deque.removeLast());
-        StdOut.println("Removed: " + deque.removeLast());
-        StdOut.println("Deque empty? " + deque.isEmpty());
-
-        StdOut.println("\nAdding elements to the deque using addFirst...");
+        // 4. Mixed Operations
+        StdOut.println("\nTest 4: Mixed Operations");
         deque.addFirst(1);
-        deque.addFirst(2);
-        deque.addFirst(3);
-        StdOut.println("Added 3, 2, 1 to the front. Size: " + deque.size());
-
-        StdOut.println("\nRemoving elements from the back of the deque...");
-        StdOut.println("Removed: " + deque.removeLast());
-        StdOut.println("Removed: " + deque.removeLast());
-        StdOut.println("Removed: " + deque.removeLast());
-        StdOut.println("Deque empty? " + deque.isEmpty());
-
-        StdOut.println("\nAdding elements to the deque using addLast...");
-        deque.addLast(1);
         deque.addLast(2);
-        deque.addLast(3);
-        StdOut.println("Added 1, 2, 3 to the back. Size: " + deque.size());
+        deque.addFirst(3);
+        deque.addLast(4);
+        StdOut.println("Added 3, 1 to the front; 2, 4 to the back. Size: " + deque.size());
+        StdOut.println("Removed from front (Expected: 3): " + deque.removeFirst());
+        StdOut.println("Removed from back (Expected: 4): " + deque.removeLast());
+        StdOut.println("Removed from front (Expected: 1): " + deque.removeFirst());
+        StdOut.println("Removed from back (Expected: 2): " + deque.removeLast());
+        StdOut.println("Expected: true, Actual: " + deque.isEmpty() + " (isEmpty)");
 
-        StdOut.println("\nRemoving elements from the front of the deque...");
-        StdOut.println("Removed: " + deque.removeFirst());
-        StdOut.println("Removed: " + deque.removeFirst());
-        StdOut.println("Removed: " + deque.removeFirst());
-        StdOut.println("Deque empty? " + deque.isEmpty());
-
-        StdOut.println("\nTesting iterator...");
+        // 5. Iterator Test
+        StdOut.println("\nTest 5: Iterator");
         deque.addLast(1);
         deque.addLast(2);
         deque.addLast(3);
         StdOut.println("Added 1, 2, 3 to the deque.");
-        StdOut.print("Iterating over deque: ");
+        StdOut.print("Iterating over deque (Expected: 1 2 3): ");
         for (Integer value : deque)
             StdOut.print(value + " ");
-        StdOut.println("\nExpected order: 1 2 3");
+        StdOut.println();
 
-        StdOut.println("\nAll tests completed successfully.");
+        // 6. Edge Cases
+        StdOut.println("\nTest 6: Edge Cases");
+        try {
+            deque.removeFirst();
+            deque.removeFirst();
+            deque.removeFirst(); // Remove all items
+            deque.removeFirst(); // Extra remove
+        } catch (NoSuchElementException e) {
+            StdOut.println("Expected exception on removeFirst from empty deque: " + e);
+        }
+        try {
+            deque.removeLast(); // Extra remove
+        } catch (NoSuchElementException e) {
+            StdOut.println("Expected exception on removeLast from empty deque: " + e);
+        }
+        try {
+            deque.addFirst(null);
+        } catch (IllegalArgumentException e) {
+            StdOut.println("Expected exception on addFirst(null): " + e);
+        }
+        try {
+            deque.addLast(null);
+        } catch (IllegalArgumentException e) {
+            StdOut.println("Expected exception on addLast(null): " + e);
+        }
+
+        StdOut.println("\nAll tests completed.");
     }
 
 }
