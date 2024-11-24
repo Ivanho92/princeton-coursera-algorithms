@@ -93,7 +93,7 @@ public class Deque<Item> implements Iterable<Item> {
 
         // Updating head
         head = head.next;
-        if (!isEmpty()) head.previous = null ;
+        if (!isEmpty()) head.previous = null;
         else tail = null;
 
         return item;

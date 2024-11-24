@@ -42,7 +42,7 @@ public class Permutation {
  * Straighforward approach
  * (maximum size at most n)
  */
-//public class Permutation {
+// public class Permutation {
 //    public static void main(String[] args) {
 //        RandomizedQueue<String> queue = new RandomizedQueue<>();
 //        int k = Integer.parseInt(args[0]);
