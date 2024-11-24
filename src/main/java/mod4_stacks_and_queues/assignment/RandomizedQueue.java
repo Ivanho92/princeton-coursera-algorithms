@@ -1,4 +1,4 @@
-package week3_Queues;
+package mod4_stacks_and_queues.assignment;
 
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
@@ -6,99 +6,106 @@ import edu.princeton.cs.algs4.StdRandom;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class RandomizedQueue<T> implements Iterable<T> {
+public class RandomizedQueue<Item> implements Iterable<Item> {
 
-    int n;
-    T[] items;
+    private int size;
+    private int capacity;
+    private Item[] array;
 
     // construct an empty randomized queue
     public RandomizedQueue() {
-        n = 0;
-        items = (T[]) new Object[1];
+        size = 0;
+        capacity = 1;
+        array = (Item[]) new Object[capacity];
     }
 
     // is the randomized queue empty?
     public boolean isEmpty() {
-        return n == 0;
+        return size == 0;
     }
 
     // return the number of items on the randomized queue
     public int size() {
-        return n;
+        return size;
+    }
+
+    private void resize(int newCapacity) {
+        this.capacity = newCapacity;
+        Item[] resizedArray = (Item[]) new Object[newCapacity];
+        for (int i = 0; i < size; i++)
+            resizedArray[i] = array[i];
+        array = resizedArray;
     }
 
     // add the item
-    public void enqueue(T item) {
+    public void enqueue(Item item) {
         if (item == null)
             throw new IllegalArgumentException();
 
-        if (n == items.length) resize(2 * items.length);
-        items[n++] = item;
-    }
-
-    private void resize(int capacity) {
-        T[] temp = (T[]) new Object[capacity];
-        int tempIndex = 0;
-        for (int i = 0; i < items.length; i++) {
-            if (items[i] == null) continue;
-            temp[tempIndex] = items[i];
-            tempIndex++;
-        }
-        items = temp;
+        if (size == capacity)
+            resize(2 * capacity);
+        array[size++] = item;
     }
 
     // remove and return a random item
-    public T dequeue() {
+    public Item dequeue() {
         if (isEmpty())
             throw new NoSuchElementException();
 
-        T deletedItem = randomItem(true);
-        if (n == items.length / 2) resize(items.length / 2);
+        int randomIndex = StdRandom.uniformInt(size);
+        Item deletedItem = array[randomIndex];
+
+        // Rearrange array to get rid of null values
+        // (order of elements doesn't matter inside a RandomizedQueue)
+        array[randomIndex] = array[--size];
+        array[size] = null;
+
+        if (size == (double) capacity / 4)
+            resize(capacity / 2);
         return deletedItem;
     }
 
     // return a random item (but do not remove it)
-    public T sample() {
+    public Item sample() {
         if (isEmpty())
             throw new NoSuchElementException();
 
-        return randomItem(false);
-    }
-
-    private T randomItem(boolean deleteItem) {
-        while(true) {
-            int randomIndex = StdRandom.uniformInt(n);
-            T randomItem = items[randomIndex];
-
-            if (randomItem == null) continue;
-
-            if (deleteItem) {
-                items[randomIndex] = null;
-                n--;
-            }
-
-            return randomItem;
-        }
+        return array[StdRandom.uniformInt(size)];
     }
 
     // return an independent iterator over items in random order
-    public Iterator<T> iterator() {
+    public Iterator<Item> iterator() {
         return new RandomizedQueueIterator();
     }
 
-    private class RandomizedQueueIterator implements Iterator<T> {
-        private int i = n;
+    private class RandomizedQueueIterator implements Iterator<Item> {
+        private int iteratorIndex;
+        private final Item[] iteratorItems;
+        private final int iteratorSize;
 
-        @Override
-        public boolean hasNext() {
-            return i > 0;
+        public RandomizedQueueIterator() {
+            iteratorIndex = size;
+            iteratorSize = size;
+
+            iteratorItems = (Item[]) new Object[size];
+            for (int i = 0; i < size; i++) iteratorItems[i] = array[i];
+            StdRandom.shuffle(iteratorItems);
         }
 
         @Override
-        public T next() {
+        public boolean hasNext() {
+            return iteratorIndex > 0;
+        }
+
+        @Override
+        public Item next() {
             if (!hasNext())
                 throw new NoSuchElementException();
-            return items[--i];
+
+            if (size != iteratorSize)
+                throw new java.util.ConcurrentModificationException();
+
+            return iteratorItems[--iteratorIndex];
         }
 
         @Override
@@ -127,7 +134,7 @@ public class RandomizedQueue<T> implements Iterable<T> {
         StdOut.println("Added items: A, B, C, D, E");
         StdOut.println("Expected: false, Actual: " + queue.isEmpty() + " (isEmpty)");
         StdOut.println("Expected: 5, Actual: " + queue.size() + " (size)");
-        StdOut.print("Items in queue (in iterator order): ");
+        StdOut.print("Items in queue (in iterator random order): ");
         for (String str : queue) StdOut.print(str + " ");
         StdOut.println();
 
@@ -157,8 +164,25 @@ public class RandomizedQueue<T> implements Iterable<T> {
         StdOut.println("Expected: true, Actual: " + queue.isEmpty() + " (isEmpty)");
         StdOut.println("Expected: 0, Actual: " + queue.size() + " (size)");
 
-        // 6. Edge Cases
-        StdOut.println("\nTest 6: Edge Cases");
+        // 6. Adding, removing, then adding again
+        StdOut.println("\nTest 6: Adding, Removing, then Adding again");
+        queue.enqueue("F");
+        StdOut.println("Added: F");
+        StdOut.println("Expected size: 1, Actual: " + queue.size());
+        StdOut.println("Expected isEmpty: false, Actual: " + queue.isEmpty());
+
+        String removedItem = queue.dequeue();
+        StdOut.println("Removed item: " + removedItem);
+        StdOut.println("Expected size: 0, Actual: " + queue.size());
+        StdOut.println("Expected isEmpty: true, Actual: " + queue.isEmpty());
+
+        queue.enqueue("G");
+        StdOut.println("Added: G");
+        StdOut.println("Expected size: 1, Actual: " + queue.size());
+        StdOut.println("Expected isEmpty: false, Actual: " + queue.isEmpty());
+
+        // 7. Edge Cases
+        StdOut.println("\nTest 7: Edge Cases");
         try {
             queue.dequeue();
         } catch (NoSuchElementException e) {
