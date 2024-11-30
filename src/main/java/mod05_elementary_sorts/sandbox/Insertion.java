@@ -3,11 +3,9 @@ package mod05_elementary_sorts.sandbox;
 import static mod05_elementary_sorts.sandbox.Utils.less;
 import static mod05_elementary_sorts.sandbox.Utils.swap;
 
-public class Insertion {
+public class Insertion implements SortAlgorithm {
 
-    private Insertion() {}
-
-    public static <T extends Comparable<T>> void sort(T[] array) {
+    public <T extends Comparable<T>> void sort(T[] array) {
         for (int i = 1; i < array.length; i++) {
             int j = i-1;
             while (j >= 0 && less(array[j+1], array[j])) {
