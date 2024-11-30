@@ -20,64 +20,64 @@ public abstract class BaseSortTests {
     void testSortingEmptyArray() {
         Integer[] input = {};
         getSortAlgorithm().sort(input);
-        assertThat(isSorted(input)).isTrue();
         assertThat(input).isEmpty();
+        assertThat(isSorted(input)).isTrue();
     }
 
     @Test
     void testSortingSingleElement() {
         Integer[] input = {42};
         getSortAlgorithm().sort(input);
-        assertThat(isSorted(input)).isTrue();
         assertThat(input).containsExactly(42);
+        assertThat(isSorted(input)).isTrue();
     }
 
     @Test
     void testSortingAlreadySorted() {
         Integer[] input = {1, 2, 3, 4, 5};
         getSortAlgorithm().sort(input);
-        assertThat(isSorted(input)).isTrue();
         assertThat(input).containsExactly(1, 2, 3, 4, 5);
+        assertThat(isSorted(input)).isTrue();
     }
 
     @Test
     void testSortingReverseOrder() {
         Integer[] input = {5, 4, 3, 2, 1};
         getSortAlgorithm().sort(input);
-        assertThat(isSorted(input)).isTrue();
         assertThat(input).containsExactly(1, 2, 3, 4, 5);
+        assertThat(isSorted(input)).isTrue();
     }
 
     @Test
     void testSortingUnsortedArray() {
         Integer[] input = {3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5};
         getSortAlgorithm().sort(input);
-        assertThat(isSorted(input)).isTrue();
         assertThat(input).containsExactly(1, 1, 2, 3, 3, 4, 5, 5, 5, 6, 9);
+        assertThat(isSorted(input)).isTrue();
     }
 
     @Test
     void testSortingWithDuplicates() {
         Integer[] input = {3, 3, 2, 2};
         getSortAlgorithm().sort(input);
-        assertThat(isSorted(input)).isTrue();
         assertThat(input).containsExactly(2, 2, 3, 3);
+        assertThat(isSorted(input)).isTrue();
     }
 
     @Test
     void testSortingNegativeNumbers() {
         Integer[] input = {-5, -1, -10, 0, 5};
         getSortAlgorithm().sort(input);
-        assertThat(isSorted(input)).isTrue();
         assertThat(input).containsExactly(-10, -5, -1, 0, 5);
+        assertThat(isSorted(input)).isTrue();
     }
 
     @Test
     void testSortingMixedNumbers() {
         Integer[] input = {-1, 2, -3, 4, 0};
         getSortAlgorithm().sort(input);
-        assertThat(isSorted(input)).isTrue();
         assertThat(input).containsExactly(-3, -1, 0, 2, 4);
+        assertThat(isSorted(input)).isTrue();
     }
 
     @ParameterizedTest
