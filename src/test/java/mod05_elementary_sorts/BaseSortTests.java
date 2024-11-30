@@ -81,12 +81,20 @@ public abstract class BaseSortTests {
         assertThat(isSorted(input)).isTrue();
     }
 
+    @Test
+    void testSortingMixedCharacters() {
+        Character[] input = {'S','O','R','T','E','X','A','M','P','L','E'};
+        getSortAlgorithm().sort(input);
+        assertThat(input).containsExactly('A','E','E','L','M','O','P','R','S','T','X');
+        assertThat(isSorted(input)).isTrue();
+    }
+
     @ParameterizedTest
     @ValueSource(ints = {
         1_250, 2_500, 5_000, 10_000,
         20_000, 40_000, 80_000,
-//        160_000, // Long to execute
-//        320_000 // Very long to execute
+        160_000, // Long to execute
+        320_000 // Very long to execute
     })
     @Execution(ExecutionMode.SAME_THREAD)
     void testSortingPerformance_100_000(int number) {
