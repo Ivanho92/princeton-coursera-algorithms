@@ -1,8 +1,7 @@
-package mod05_elementary_sorts;
+package mod05_elementary_sorts.sandbox;
 
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.Stopwatch;
-import mod05_elementary_sorts.sandbox.SortAlgorithm;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;

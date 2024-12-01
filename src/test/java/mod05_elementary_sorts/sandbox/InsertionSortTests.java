@@ -1,7 +1,4 @@
-package mod05_elementary_sorts;
-
-import mod05_elementary_sorts.sandbox.Insertion;
-import mod05_elementary_sorts.sandbox.SortAlgorithm;
+package mod05_elementary_sorts.sandbox;
 
 class InsertionSortTests extends BaseSortTests {
 

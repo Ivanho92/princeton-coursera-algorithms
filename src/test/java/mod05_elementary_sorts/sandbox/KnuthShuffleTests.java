@@ -1,10 +1,8 @@
-package mod05_elementary_sorts;
+package mod05_elementary_sorts.sandbox;
 
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.Stopwatch;
-import mod05_elementary_sorts.sandbox.ShuffleAlgorithm;
-import mod05_elementary_sorts.sandbox.ShuffleSort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.parallel.Execution;
@@ -13,9 +11,9 @@ import org.junit.jupiter.api.parallel.ExecutionMode;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Execution(ExecutionMode.SAME_THREAD)
-class ShuffleSortTests {
+class KnuthShuffleTests {
 
-    private final ShuffleAlgorithm shuffleSort = new ShuffleSort();
+    private final KnuthShuffle knuthShuffle = new KnuthShuffle();
 
     @BeforeEach
     void setSeed() {
@@ -25,21 +23,21 @@ class ShuffleSortTests {
     @Test
     void shuffleShouldRandomizeArray() {
         Integer[] array = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-        shuffleSort.shuffle(array);
-        assertThat(array).containsExactly(3, 7, 1, 4, 5, 6, 8, 9, 2, 10);
+        knuthShuffle.shuffle(array);
+        assertThat(array).containsExactly(6, 5, 8, 10, 3, 1, 2, 9, 4, 7);
     }
 
     @Test
     void shuffleShouldNotAlterEmptyArray() {
         Integer[] array = {};
-        shuffleSort.shuffle(array);
+        knuthShuffle.shuffle(array);
         assertThat(array).isEmpty();
     }
 
     @Test
     void shuffleShouldNotAlterSingleElementArray() {
         Integer[] array = {42};
-        shuffleSort.shuffle(array);
+        knuthShuffle.shuffle(array);
         assertThat(array).containsExactly(42);
     }
 
@@ -51,10 +49,10 @@ class ShuffleSortTests {
             largeArray[i] = i;
 
         Stopwatch watch = new Stopwatch();
-        shuffleSort.shuffle(largeArray);
+        knuthShuffle.shuffle(largeArray);
         StdOut.println("Performance test with N=" + n);
         StdOut.println(watch.elapsedTime() + " sec.\n");
 
-        assertThat(watch.elapsedTime()).isLessThan(10); // less than 10 seconds
+        assertThat(watch.elapsedTime()).isLessThan(3); // less than 3 seconds
     }
 }
