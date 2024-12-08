@@ -1,9 +1,9 @@
 package mod05_elementary_sorts.sandbox;
 
-class SelectionSortTests extends BaseSortTests {
+class ShellSortTest extends BaseSortTest {
 
     @Override
     protected SortAlgorithm getSortAlgorithm() {
-        return new Selection();
+        return new Shell();
     }
 }

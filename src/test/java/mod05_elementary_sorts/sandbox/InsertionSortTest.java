@@ -1,6 +1,6 @@
 package mod05_elementary_sorts.sandbox;
 
-class InsertionSortTests extends BaseSortTests {
+class InsertionSortTest extends BaseSortTest {
 
     @Override
     protected SortAlgorithm getSortAlgorithm() {

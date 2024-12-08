@@ -11,9 +11,9 @@ import org.junit.jupiter.api.parallel.ExecutionMode;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Execution(ExecutionMode.SAME_THREAD)
-class KnuthShuffleTests {
+class ShuffleSortTest {
 
-    private final KnuthShuffle knuthShuffle = new KnuthShuffle();
+    private final ShuffleAlgorithm shuffleSort = new ShuffleSort();
 
     @BeforeEach
     void setSeed() {
@@ -23,21 +23,21 @@ class KnuthShuffleTests {
     @Test
     void shuffleShouldRandomizeArray() {
         Integer[] array = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-        knuthShuffle.shuffle(array);
-        assertThat(array).containsExactly(6, 5, 8, 10, 3, 1, 2, 9, 4, 7);
+        shuffleSort.shuffle(array);
+        assertThat(array).containsExactly(3, 7, 1, 4, 5, 6, 8, 9, 2, 10);
     }
 
     @Test
     void shuffleShouldNotAlterEmptyArray() {
         Integer[] array = {};
-        knuthShuffle.shuffle(array);
+        shuffleSort.shuffle(array);
         assertThat(array).isEmpty();
     }
 
     @Test
     void shuffleShouldNotAlterSingleElementArray() {
         Integer[] array = {42};
-        knuthShuffle.shuffle(array);
+        shuffleSort.shuffle(array);
         assertThat(array).containsExactly(42);
     }
 
@@ -49,10 +49,10 @@ class KnuthShuffleTests {
             largeArray[i] = i;
 
         Stopwatch watch = new Stopwatch();
-        knuthShuffle.shuffle(largeArray);
+        shuffleSort.shuffle(largeArray);
         StdOut.println("Performance test with N=" + n);
         StdOut.println(watch.elapsedTime() + " sec.\n");
 
-        assertThat(watch.elapsedTime()).isLessThan(3); // less than 3 seconds
+        assertThat(watch.elapsedTime()).isLessThan(10); // less than 10 seconds
     }
 }

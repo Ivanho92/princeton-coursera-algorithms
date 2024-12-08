@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static mod05_elementary_sorts.sandbox.Utils.isSorted;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public abstract class BaseSortTests {
+public abstract class BaseSortTest {
 
     // Abstract method to provide the sorting algorithm
     protected abstract SortAlgorithm getSortAlgorithm();
@@ -96,11 +96,7 @@ public abstract class BaseSortTests {
         320_000 // Very long to execute
     })
     @Execution(ExecutionMode.SAME_THREAD)
-    void testSortingPerformance_100_000(int number) {
-        testSortingPerformance(number);
-    }
-
-    private void testSortingPerformance(int capacity) {
+    void testSortingPerformance_100_000(int capacity) {
         // Given array in reverse order
         Integer[] input = new Integer[capacity];
         for (int i = 0; i < capacity; i++)
@@ -115,5 +111,4 @@ public abstract class BaseSortTests {
         // Make sure it's sorted
         assertThat(isSorted(input)).isTrue();
     }
-
 }
